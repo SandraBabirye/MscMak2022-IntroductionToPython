@@ -1,26 +1,26 @@
-import sys
+def getGenList(gene_file):
+    with open (gene_file, 'r') as humchr:
+        tag = False #Start by setting the tag to false
+        gene_list=[]
+        for line in humchr:
+                if line.startswith('Gene'):
+                    tag = True
+                if tag:
+                    line_split = line.split()
+                    if len(line_split) != 0:
+                        if '-' in line_split[0]:
+                            continue
+                        else:
+                            gene_list.append(line_split[0])
+    return gene_list[3:][:-2]
 
-def get_genes(infile,outfile):
-    """
-    Function to extract a list of genes and write to file
-    """
-    gene_list = []
-    with open(infile) as  gene:
-        tag = False
-        for line in gene:
-            if line.startswith('name'):
-                tag = True
-                continue
-            if tag:
-                items = line.split()
-                if len(items) > 0:
-                    gene_list.append(items[0])
-    gene_list = gene_list[1:-7]
-    with open(outfile, 'w') as outfile:
-        for i in gene_list:
-            outfile.write(i+'\n')
-    return True
+inputfile  = getGenList("../Data/humchrx.txt")
 
-infile = sys.argv[1]
-output = sys.argv[2]
-get_genes(infile,output)
+def writeGeneList(genelist, outfile):
+    genelist= inputfile
+    
+    with open(outfile, 'w') as gene_names:   #creating a new file called gene_names
+        for gene in genelist:
+                gene_names.writelines(gene+'\n')
+    print('Genes have been written successfully!!')
+writeGeneList("../Data/humchrx.txt", "../Data/gene_names")
