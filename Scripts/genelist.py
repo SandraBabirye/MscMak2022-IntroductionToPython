@@ -24,3 +24,14 @@ def writeGeneList(genelist, outfile):
                 gene_names.writelines(gene+'\n')
     print('Genes have been written successfully!!')
 writeGeneList("../Data/humchrx.txt", "../Data/gene_names")
+
+import sys 
+
+if len(sys.argv) < 3:
+
+    print(__doc__)
+else:
+    gene_file = sys.argv[1]
+    out_file = sys.argv[2]
+    clean_gene_list = getGenList(gene_file)
+    writeGeneList(clean_gene_list, out_file)
